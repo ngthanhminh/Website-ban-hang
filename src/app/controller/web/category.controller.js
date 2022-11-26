@@ -4,7 +4,7 @@ class categoryController {
 
     getAllCategory() {
         return new Promise((resolve, reject)=>{
-            const q = `SELECT * FROM website_shopping.category`
+            const q = `SELECT * FROM category`
             conn.query(q, (err, results)=>{
                 if(results){
                     resolve(results)
@@ -17,12 +17,12 @@ class categoryController {
 
     getCategories(req, res) {
         return new Promise((resolve, reject)=>{
-            const q = `SELECT * FROM website_shopping.category`
+            const q = `SELECT * FROM category`
             conn.query(q, (err, results)=>{
                 if(results){
-                    res.json({"categories" : results})
+                    res.status(200).json({"categories" : results})
                 }else{
-                    res.json({"Error" :new Error('no data with table catgory')})
+                    res.status(400).json({"Error" :new Error('no data with table catgory')})
                 }
             })
         })

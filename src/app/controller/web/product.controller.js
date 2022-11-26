@@ -11,12 +11,12 @@ class productController {
     async index(req, res) {
         // get product for product page:
         var products = await new Promise((resolve, reject)=>{
-            const q = `SELECT * FROM website_shopping.product limit 8`
+            const q = `SELECT * FROM product limit 8`
             conn.query(q, (err, results)=>{
                 if(results){
                     resolve(results)
                 }else{
-                    reject(new Error('no data with table product'))
+                    reject(new Error('No data with table product'))
                 }
             })
         })
@@ -34,40 +34,40 @@ class productController {
 
     // get product with idProduct
     getProduct(req, res){
-        var id = req.params.idProduct
-        var id = Number(id)
-        const q = `SELECT * FROM website_shopping.product where idProduct = ${id}`
+        var idProduct = req.params.idProduct
+        var idProduct = Number(idProduct)
+        const q = `SELECT * FROM product where idProduct = ${idProduct}`
             conn.query(q, (err, results)=>{
                 // console.log(results)
                 if(results){
-                    return res.json({"product": results})
+                    res.status(200).json({"product": results})
                 }else{
-                    res.json({"Error": new Error("Can't get product !")})
+                    res.status(400).json({"Error": new Error("Can't get product !")})
                 }
             })
     }
     
-    // get all product (get 8 product)
+    // get all product (first load/ get 8 product)
     getAllProduct(req, res) {
-            const q = `SELECT * FROM website_shopping.product limit 8`
+            const q = `SELECT * FROM product limit 8`
             conn.query(q, (err, results)=>{
                 if(results){
-                    return res.json({"products": results})
+                    res.status(200).json({"products": results})
                 }else{
-                    res.json({"Error": new Error("Can't get all product !")})
+                    res.status(400).json({"Error": new Error("Can't get all product !")})
                 }
             })
         }
 
-    // get product for home page
+    // get product for home page (first load home/ get 4 products)
     getProductHome() {
         return new Promise((resolve, reject)=>{
-            const q = `SELECT * FROM website_shopping.product limit 4`
+            const q = `SELECT * FROM product limit 4`
             conn.query(q, (err, results)=>{
                 if(results){
                     resolve(results)
                 }else{
-                    reject(new Error('no data with table product'))
+                    reject(new Error('Cant get product'))
                 }
             })
         })
@@ -84,12 +84,12 @@ class productController {
             page = 1
         }
         var start = (page - 1)*page_size
-        const q = `SELECT * FROM website_shopping.product limit ${start}, ${page_size}`
+        const q = `SELECT * FROM product limit ${start}, ${page_size}`
         conn.query(q, (err, results)=>{
             if(results){
-                return res.json({"products": results})
+                res.status(200).json({"products": results})
             }else{
-                throw new Error("Can't get some product !")
+                res.status(400).json({"Error": new Error("Can't get some product !")})
             }
         })
     }
@@ -110,9 +110,9 @@ class productController {
         const q = `SELECT * FROM website_shopping.product where idCategory = ${id} limit ${start}, ${page_size}`
         conn.query(q, (err, results)=>{
             if(results){
-                return res.json({"products": results})
+                res.status(200).json({"products": results})
             }else{
-                throw new Error("Can't get some product !")
+                res.status(400).json({"Error": new Error("Can't get some product !")})
             }
         })
     }
@@ -126,14 +126,13 @@ class productController {
             const q = `SELECT * FROM product where idCategory = ${id} limit 8`
             conn.query(q, (err, results)=>{
                 if(results){
-                    // console.log(results)
-                    return res.json({"products": results})
+                    res.status(200).json({"products": results})
                 }else{
-                    throw new Error("can't get some product !")
+                    res.status(200).json({"Error": new Error("Can't get some product !")})
                 }
             })
         }else{
-            console.log('')
+            res.status(400).json({"Error": new Error("Can't get some product !")})
         }  
     }
 
@@ -147,13 +146,13 @@ class productController {
             conn.query(q, (err, results)=>{
                 if(results){
                     // console.log(results)
-                    return res.json({"products": results})
+                    res.json({"products": results})
                 }else{
-                    throw new Error("can't get some product !")
+                    res.status(400).json({"Error": new Error("Can't get some product !")})
                 }
             })
         }else{
-            console.log('')
+            res.status(400).json({"Error": new Error("Can't get some product !")})
         }  
     }
     

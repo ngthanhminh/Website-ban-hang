@@ -8,10 +8,10 @@ class cartController {
     // render cart page:
     async index(req, res) {
         var user_token = req.cookies.user_token
-        const idCustomer = jwt.verify(user_token, process.env.KEY_TOKEN)
+        const idUser = jwt.verify(user_token, process.env.KEY_TOKEN)
 
         var cart = await new Promise((resolve, reject)=>{
-            const q = `SELECT * FROM cart join product on cart.idProduct = product.idProduct where idCustomer = ${idCustomer};`
+            const q = `SELECT * FROM cart join product on cart.idProduct = product.idProduct where idUser = ${idUser};`
             conn.query(q, (err, results)=>{
                 if(results){
                     resolve(results)
@@ -30,39 +30,35 @@ class cartController {
 
     // get cart:
     getCart(req, res){
-        var user_token = req.params.idCustomer
-        try{
-            const idCustomer = jwt.verify(user_token, process.env.KEY_TOKEN)
-            const q = `SELECT * FROM cart join product on cart.idProduct = product.idProduct where idCustomer = ${idCustomer};`
-            conn.query(q, (err, results)=>{
-                if(results){
-                    res.json({"cart": results})
-                }else{
-                    res.json({"Error: ": new Error(`Can't get product ! [/cartController/getProduct_idUser]`)})
-                }
-            })
-        }
-        catch(error){
-            res.json({"Error": error})
-        }
+        var idUser = req.params.idUser
+        idUser = jwt.verify(idUser, process.env.KEY_TOKEN)
+        const q = `SELECT * FROM cart join product on cart.idProduct = product.idProduct where idUser = ${idUser};`
+        conn.query(q, (err, results)=>{
+            if(results){
+                res.status(200).json({"cart": results})
+            }else{
+                res.status(400).json({"Error: ": new Error(`Can't get product !`)})
+            }
+        })
+        
     }
 
     // check product in db
     checkProduct(req, res, next){
-        var id = req.body.idCustomer
-        const idCustomer = jwt.verify(id, process.env.KEY_TOKEN)
-        
+        var id = req.body.idUser
         var idProduct = Number(req.body.idProduct)
         var number = Number(req.body.number)
+        const idUser = jwt.verify(id, process.env.KEY_TOKEN)
 
-        const q_checkProduct = `SELECT * FROM cart where idProduct = ${idProduct} and idCustomer = ${idCustomer}`
+        const q_checkProduct = `SELECT * FROM cart where idProduct = ${idProduct} and idUser = ${idUser}`
         conn.query(q_checkProduct, (err, results)=>{
             if(results.length > 0){
-                const q_updateProduct = `update cart set countBuy = countBuy + ${number} where idProduct = ${idProduct} and idCustomer = ${idCustomer}`
+                const q_updateProduct = `update cart set countBuy = countBuy + ${number} where idProduct = ${idProduct} and idUser = ${idUser}`
                 conn.query(q_updateProduct, (err, results)=>{
-                    if(err){
-                        console.log(err)
-                        return
+                    if(results){
+                        res.status(200).json({"message": "Updated product !"})
+                    }else{
+                        res.status(400).json({"Error": new Error("Update product false !")})
                     }
                 })
             }else{
@@ -73,44 +69,50 @@ class cartController {
 
     // add product on cart
     addProduct(req, res){
-        var id = req.body.idCustomer
+        var id = req.body.idUser
         var idProduct = Number(req.body.idProduct)
         var number = Number(req.body.number)
 
-        const idCustomer = jwt.verify(id, process.env.KEY_TOKEN)
-        const q = `insert into	cart values(${idProduct}, ${idCustomer}, ${number})`
+        const idUser = jwt.verify(id, process.env.KEY_TOKEN)
+        const q = `insert into	cart values(${idProduct}, ${idUser}, ${number})`
         conn.query(q, (err, results)=>{
-            if(err){
-                res.json({"Error: ": new Error(`Can't get product ! [/cartController/getProduct_idUser]`)})
+            if(results){
+                res.status(200).json({"message": "added product !"})
+            }else{
+                res.status(400).json({"Error: ": new Error(`Can't get product ! [/cartController/getProduct_idUser]`)})
             }
         })
     }
 
     // delete product in cart 
     deleteProduct(req, res){
-        var id = req.body.idCustomer
+        var id = req.body.idUser
         var idProduct = Number(req.body.idProduct)
-        const idCustomer = jwt.verify(id, process.env.KEY_TOKEN)
-        const q = `delete from	cart where idProduct = ${idProduct} and idCustomer = ${idCustomer}`
+        const idUser = jwt.verify(id, process.env.KEY_TOKEN)
+        const q = `delete from	cart where idProduct = ${idProduct} and idUser = ${idUser}`
         conn.query(q, (err, results)=>{
-            if(err){
-                res.json({"Error: ": new Error(`Can't get product ! [/cartController/deleteProduct]`)})
+            if(results){
+                res.status(200).json({"message": "Deleted product !"})
+            }else{
+                res.status(400).json({"Error: ": new Error(`Can't get product !`)})
             }
         })
     }
 
     // update cart 
     updateCart(req, res){
-        var id = req.body.idCustomer
+        var id = req.body.idUser
         var idProduct = req.body.idProduct
         var number = req.body.number
         idProduct = Number(idProduct)
         number = Number(number)
-        const idCustomer = jwt.verify(id, process.env.KEY_TOKEN)
-        const q = `UPDATE cart	SET countBuy = ${number} WHERE idProduct = ${idProduct} and idCustomer = ${idCustomer}`
+        const idUser = jwt.verify(id, process.env.KEY_TOKEN)
+        const q = `UPDATE cart	SET countBuy = ${number} WHERE idProduct = ${idProduct} and idUser = ${idUser}`
         conn.query(q, (err, results)=>{
-            if(err){
-                res.json({"Error: ": new Error(`Can't update cart ! [/cartController/updateCart]`)})
+            if(results){
+                res.status(200).json({"message": "updated cart !"})
+            }else{
+                res.status(400).json({"Error: ": new Error(`Can't update cart !`)})
             }
         })
     }

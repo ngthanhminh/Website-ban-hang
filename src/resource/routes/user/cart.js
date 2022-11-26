@@ -9,7 +9,7 @@ const router = express.Router()
     router.get('/', loginController.auth_account_remember, cartController.index)
 
     // get cart information of customer 
-    .get('/:idCustomer', loginController.auth_account_remember, cartController.getCart)
+    .get('/:idUser', loginController.auth_account_remember, cartController.getCart)
 
     // add product to cart
     .post('/', [loginController.auth_account_remember, cartController.checkProduct], cartController.addProduct)

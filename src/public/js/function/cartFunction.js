@@ -1,10 +1,26 @@
-
-    
-    document.getElementById('cart').onclick = function(){
+    // delete product in cart 
+    function deleteProductCart(Product){
+        var id = Product.getAttribute('id')
         var idCustomer = getCookie('user_token')
-        if( idCustomer ) {
+        Product.parentElement.remove()
+        $('.header-cart-total').remove()
+        $.ajax({
+            url: `/cart`,
+            type: 'DELETE',
+            data: {
+                idProduct: id,
+                idCustomer: idCustomer,
+            }
+        })
+        
+    }
+
+    // get cart header
+    function getCart(){
+        var idUser = getCookie('user_token')
+        if( idUser ) {
             $.ajax({
-                url: `/cart/${idCustomer}`,
+                url: `/cart/${idUser}`,
                 type: 'GET'
             })
             .then(data => {
@@ -50,14 +66,14 @@
     // delete product 
     function deleteProductCart(Product){
         var id = Product.getAttribute('id')
-        var idCustomer = getCookie('user_token')
+        var idUser = getCookie('user_token')
         Product.parentElement.remove()
         $.ajax({
             url: `/cart`,
             type: 'DELETE',
             data: {
                 idProduct: id,
-                idCustomer: idCustomer,
+                idUser: idUser,
             }
         })
     }
@@ -95,7 +111,7 @@
 
     // update cart 
     function updateCart(){
-        var idCustomer = getCookie('user_token')
+        var idUser = getCookie('user_token')
         $('.table_row').each(function(){
             let id = $(this).children('.column-1').attr('id')
             let number = $(this).children('.column-4').children().children('#numberProduct').attr('value')
@@ -103,7 +119,7 @@
                 url: `/cart`,
                 type: 'PUT',
                 data: {
-                    idCustomer: idCustomer,
+                    idUser: idUser,
                     idProduct : id,
                     number: number,
                 }

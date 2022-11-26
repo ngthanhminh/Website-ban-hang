@@ -131,7 +131,7 @@ var numberLoadCP = 0;
                                         </a>
             
                                         <span class="stext-105 cl3">
-                                            ${val.productPrice}
+                                           $ ${val.productPrice}
                                         </span>
                                     </div>
             
@@ -391,14 +391,15 @@ var numberLoadCP = 0;
     // add product to cart
     function add_to_cart(id){
         var number = ($('#product_count').attr('value'))
-        var idCustomer = getCookie('user_token')
-        if(idCustomer){
+        var idUser = getCookie('user_token')
+        console.log(idUser)
+        if(idUser){
             $.ajax({
                 url: `/cart`,
                 type: 'POST',
                 data: {
                     idProduct : id.getAttribute('id'),
-                    idCustomer: idCustomer,
+                    idUser: idUser,
                     number: number,
                 }
             })

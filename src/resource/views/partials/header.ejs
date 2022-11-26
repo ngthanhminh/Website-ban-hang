@@ -71,7 +71,7 @@
                         <i class="zmdi zmdi-search"></i>
                     </div>
 
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" id="cart"
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" id="cart" onclick="getCart()"
                         data-notify="2">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
@@ -142,22 +142,5 @@
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <script src="/js/function/loginFunction.js"></script>
 <script src="/js/function/cartFunction.js"></script>
-<script>
-    function deleteProductCart(Product){
-        var id = Product.getAttribute('id')
-        var idCustomer = getCookie('user_token')
-        Product.parentElement.remove()
-        $('.header-cart-total').remove()
-        $.ajax({
-            url: `/cart`,
-            type: 'DELETE',
-            data: {
-                idProduct: id,
-                idCustomer: idCustomer,
-            }
-        })
-        
-    }
-</script>
 
 
