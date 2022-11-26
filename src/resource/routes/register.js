@@ -10,5 +10,6 @@ router.use((req, res, next) => {
     next()
 })
     .get('/', registerController.index)
+    .post('/', registerController.check_account, registerController.register_account)
 
 module.exports = router;

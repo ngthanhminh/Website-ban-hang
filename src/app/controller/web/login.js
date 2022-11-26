@@ -60,7 +60,6 @@ class login {
              }
              else{
                 res.status(400).json({"message": "Tai khoan hoac mat khau khong chinh xac !"})
-                next()
             }
         })
     }
