@@ -15,8 +15,8 @@ class categoryController {
         })
     }
 
+    // get all categories
     getCategories(req, res) {
-        return new Promise((resolve, reject)=>{
             const q = `SELECT * FROM category`
             conn.query(q, (err, results)=>{
                 if(results){
@@ -25,7 +25,19 @@ class categoryController {
                     res.json({"Error" :new Error('no data with table catgory')})
                 }
             })
-        })
+    }
+
+    // get a category 
+    getCategory(req, res){
+        var idCategory = req.params.idCategory
+        const q = `SELECT * FROM category where idCategory = ${idCategory}`
+            conn.query(q, (err, results)=>{
+                if(results){
+                    res.json({"category" : results})
+                }else{
+                    res.json({"Error" :new Error('no data with table catgory')})
+                }
+            })
     }
 
 }

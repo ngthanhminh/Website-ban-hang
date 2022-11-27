@@ -1,0 +1,80 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+
+  }
+  
+  th, td {
+    width: 25%;
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #DDD;
+  }
+  
+  th:last-child,td:last-child{
+    text-align: center;
+  }
+
+  tr:hover {background-color: #D6EEEE;}
+  
+  button:hover{
+    box-sizing: border-box;
+    outline: 0.1px solid #5d6778;
+  }
+ 
+  button{
+    box-sizing: border-box;
+    font-size: 12px;
+    color: #5d6778;
+    border: none;
+    /* border: 0.1px solid #5d6778; */
+    background-color: transparent;
+    padding: 2px 20px;
+  }
+
+  .nav-link:hover{
+    cursor: pointer;
+    color: #15a362 !important;
+  }
+
+  .submenu-item:hover{
+    cursor: pointer;
+    color: #15a362;
+  }
+
+  .app-wrapper{
+    padding: 20px;
+  }
+
+  .detailCategory{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .formElement{
+    margin: 20px;
+  }
+
+ .formElement label{
+    display: inline-block;
+    width: 60px;
+ }
+
+ .formElement input[type="text"]{
+    display: inline-block;
+    width: 300px;
+    padding: 4px 10px;
+    font-size: 14px;
+ }
+
+ .formElement input[type="button"]{
+    margin-top: 20px;
+    margin-right: 20px;
+    padding: 4px 24px;
+ }
+
+ .form-content h3{
+    text-align: center;
+    padding-bottom: 30px;
+ }

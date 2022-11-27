@@ -8,6 +8,8 @@ const router = express.Router()
     //get information for contact page 
     // check login
     router.get('/', categoryController.getCategories)
-    
+        
+        // get information a category
+        .get('/:idCategory', categoryController.getCategory)
 
 module.exports = router;
