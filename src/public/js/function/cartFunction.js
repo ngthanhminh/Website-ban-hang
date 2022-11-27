@@ -83,7 +83,7 @@
         var total = Number(node.parentElement.parentElement.nextElementSibling.innerHTML.slice(2))
         let number = Number(node.nextElementSibling.getAttribute('value'))
         number -= 1
-        if(number < 0){
+        if(number < 1){
             number = 0
         }
         price = Number(price)

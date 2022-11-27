@@ -56,9 +56,9 @@ class cartController {
                 const q_updateProduct = `update cart set countBuy = countBuy + ${number} where idProduct = ${idProduct} and idUser = ${idUser}`
                 conn.query(q_updateProduct, (err, results)=>{
                     if(results){
-                        res.status(200).json({"message": "Updated product !"})
+                        res.json({"message": "Updated product !"})
                     }else{
-                        res.status(400).json({"Error": new Error("Update product false !")})
+                        res.json({"Error": new Error("Update product false !")})
                     }
                 })
             }else{
@@ -77,9 +77,9 @@ class cartController {
         const q = `insert into	cart values(${idProduct}, ${idUser}, ${number})`
         conn.query(q, (err, results)=>{
             if(results){
-                res.status(200).json({"message": "added product !"})
+                res.json({"message": "added product !"})
             }else{
-                res.status(400).json({"Error: ": new Error(`Can't get product ! [/cartController/getProduct_idUser]`)})
+                res.json({"Error: ": new Error(`Can't get product ! [/cartController/getProduct_idUser]`)})
             }
         })
     }
@@ -92,9 +92,9 @@ class cartController {
         const q = `delete from	cart where idProduct = ${idProduct} and idUser = ${idUser}`
         conn.query(q, (err, results)=>{
             if(results){
-                res.status(200).json({"message": "Deleted product !"})
+                res.json({"message": "Deleted product !"})
             }else{
-                res.status(400).json({"Error: ": new Error(`Can't get product !`)})
+                res.json({"Error: ": new Error(`Can't get product !`)})
             }
         })
     }
@@ -110,9 +110,9 @@ class cartController {
         const q = `UPDATE cart	SET countBuy = ${number} WHERE idProduct = ${idProduct} and idUser = ${idUser}`
         conn.query(q, (err, results)=>{
             if(results){
-                res.status(200).json({"message": "updated cart !"})
+                res.json({"message": "updated cart !"})
             }else{
-                res.status(400).json({"Error: ": new Error(`Can't update cart !`)})
+                res.json({"Error: ": new Error(`Can't update cart !`)})
             }
         })
     }

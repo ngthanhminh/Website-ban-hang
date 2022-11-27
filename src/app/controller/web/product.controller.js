@@ -40,9 +40,9 @@ class productController {
             conn.query(q, (err, results)=>{
                 // console.log(results)
                 if(results){
-                    res.status(200).json({"product": results})
+                    res.json({"product": results})
                 }else{
-                    res.status(400).json({"Error": new Error("Can't get product !")})
+                    res.json({"Error": new Error("Can't get product !")})
                 }
             })
     }
@@ -52,9 +52,9 @@ class productController {
             const q = `SELECT * FROM product limit 8`
             conn.query(q, (err, results)=>{
                 if(results){
-                    res.status(200).json({"products": results})
+                    res.json({"products": results})
                 }else{
-                    res.status(400).json({"Error": new Error("Can't get all product !")})
+                    res.json({"Error": new Error("Can't get all product !")})
                 }
             })
         }
@@ -87,9 +87,9 @@ class productController {
         const q = `SELECT * FROM product limit ${start}, ${page_size}`
         conn.query(q, (err, results)=>{
             if(results){
-                res.status(200).json({"products": results})
+                res.json({"products": results})
             }else{
-                res.status(400).json({"Error": new Error("Can't get some product !")})
+                res.json({"Error": new Error("Can't get some product !")})
             }
         })
     }
@@ -110,9 +110,9 @@ class productController {
         const q = `SELECT * FROM website_shopping.product where idCategory = ${id} limit ${start}, ${page_size}`
         conn.query(q, (err, results)=>{
             if(results){
-                res.status(200).json({"products": results})
+                res.json({"products": results})
             }else{
-                res.status(400).json({"Error": new Error("Can't get some product !")})
+                res.json({"Error": new Error("Can't get some product !")})
             }
         })
     }
@@ -126,13 +126,13 @@ class productController {
             const q = `SELECT * FROM product where idCategory = ${id} limit 8`
             conn.query(q, (err, results)=>{
                 if(results){
-                    res.status(200).json({"products": results})
+                    res.json({"products": results})
                 }else{
-                    res.status(200).json({"Error": new Error("Can't get some product !")})
+                    res.json({"Error": new Error("Can't get some product !")})
                 }
             })
         }else{
-            res.status(400).json({"Error": new Error("Can't get some product !")})
+            res.json({"Error": new Error("Can't get some product !")})
         }  
     }
 
@@ -148,11 +148,11 @@ class productController {
                     // console.log(results)
                     res.json({"products": results})
                 }else{
-                    res.status(400).json({"Error": new Error("Can't get some product !")})
+                    res.json({"Error": new Error("Can't get some product !")})
                 }
             })
         }else{
-            res.status(400).json({"Error": new Error("Can't get some product !")})
+            res.json({"Error": new Error("Can't get some product !")})
         }  
     }
     

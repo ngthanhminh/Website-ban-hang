@@ -15,7 +15,7 @@ class login {
 
     // auth
     auth(req, res){
-        res.status(200).json({"message": "Dang nhap thanh cong"})
+        res.json({"message": "Dang nhap thanh cong"})
     }
 
     // verify login
@@ -51,7 +51,7 @@ class login {
              if(results.length > 0){
                 if(results[0].role == 'customer'){
                     const token = jwt.sign(results[0].idUser, process.env.KEY_TOKEN)
-                    res.status(200).json({"tokenUser": token})
+                    res.json({"tokenUser": token})
                 }
                 if(results[0].role == 'admin'){
                     const token = jwt.sign(results[0].idUser, process.env.KEY_TOKEN)
@@ -59,7 +59,7 @@ class login {
                 }
              }
              else{
-                res.status(400).json({"message": "Tai khoan hoac mat khau khong chinh xac !"})
+                res.json({"message": "Tai khoan hoac mat khau khong chinh xac !"})
             }
         })
     }

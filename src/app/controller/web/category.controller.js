@@ -20,9 +20,9 @@ class categoryController {
             const q = `SELECT * FROM category`
             conn.query(q, (err, results)=>{
                 if(results){
-                    res.status(200).json({"categories" : results})
+                    res.json({"categories" : results})
                 }else{
-                    res.status(400).json({"Error" :new Error('no data with table catgory')})
+                    res.json({"Error" :new Error('no data with table catgory')})
                 }
             })
         })

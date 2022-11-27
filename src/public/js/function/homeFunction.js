@@ -42,7 +42,6 @@ var numberLoad = 0;
                 $('#products').append(product)
             })
             numberLoad++
-            console.log(numberLoad)
        })
        .catch(err=>{
             console.log('error: ', err)
