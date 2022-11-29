@@ -35,12 +35,6 @@
 		            <div class="search-mobile-trigger d-sm-none col">
 			            <i class="search-mobile-trigger-icon fas fa-search"></i>
 			        </div><!--//col-->
-		            <div class="app-search-box col">
-		                <form class="app-search-form">   
-							<input type="text" placeholder="Search..." name="search" class="form-control search-input">
-							<button type="submit" class="btn search-btn btn-primary" value="Search"><i class="fas fa-search"></i></button> 
-				        </form>
-		            </div><!--//app-search-box-->
 		            
 		            <div class="app-utilities col-auto">
 			            <div class="app-utility-item" id="yourAccount">
@@ -56,7 +50,7 @@
 	        <div class="sidepanel-inner d-flex flex-column">
 		        <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 		        <div class="app-branding">
-					<span class="logo-text">PORTAL</span>
+					<span class="logo-text">COZA STORE</span>
 	
 		        </div><!--//app-branding-->  
 			    <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -153,10 +147,16 @@
 						<label>Name</label><input type="text" value="" name="categoryName" id="categoryName" />
 					</div>
 					<div class="formElement">
-						<label>Gender</label><input type="text" value="" name="forGender" id="forGender" />
+						<label>Gender</label>
+						<select name="gender" id="gender">
+							<option value="Man">Man</option>
+							<option value="Woman">Woman</option>
+							<option value="Kids">Kids</option>
+							<option value="All">All</option>
+						  </select>
 					</div>
 					<div class="formElement">
-						<label></label><input type="button" name="" id="update_Category" value="Update" />
+						<label></label><input type="button" name="" id="update_Category" value="Update"  />
 					</div>
 				</div>
 			</form>
@@ -175,3 +175,6 @@
 </body>
 </html> 
 
+<script>
+
+</script>

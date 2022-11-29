@@ -6,10 +6,22 @@ const productController = require('../../../app/controller/web/product.controlle
 
 const router = express.Router()
 
-router.use((req, res, next) => {
-    next()
-})
-    .get('/', productController.index)
+router.get('/', productController.getAllProducts)
+
+    // get a product 
+    .get('/:idProduct', productController.getProduct)
+
+    // add category
+    // .post('/', productController.checkBeforeAdd, categoryController.addCategory)
+
+    // // delete category
+    .delete('/:idProduct', productController.checkProduct, productController.deleteProduct)
+
+    // // update category
+    .put('/:idProduct', productController.checkProduct, productController.updateProduct)
+
+    // // search category
+    // .get('/search/:categoryName', productController.search)
 
 
 

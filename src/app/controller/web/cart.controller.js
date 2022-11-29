@@ -88,8 +88,9 @@ class cartController {
     deleteProduct(req, res){
         var id = req.body.idUser
         var idProduct = Number(req.body.idProduct)
-        const idUser = jwt.verify(id, process.env.KEY_TOKEN)
-        const q = `delete from	cart where idProduct = ${idProduct} and idUser = ${idUser}`
+        if(id){
+            const idUser = jwt.verify(id, process.env.KEY_TOKEN)
+            const q = `delete from	cart where idProduct = ${idProduct} and idUser = ${idUser}`
         conn.query(q, (err, results)=>{
             if(results){
                 res.json({"message": "Deleted product !"})
@@ -97,6 +98,10 @@ class cartController {
                 res.json({"Error: ": new Error(`Can't get product !`)})
             }
         })
+        }
+        else{
+            res.json({"Error": "Can't delete !"})
+        }
     }
 
     // update cart 

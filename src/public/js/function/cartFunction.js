@@ -1,19 +1,19 @@
-    // delete product in cart 
-    function deleteProductCart(Product){
-        var id = Product.getAttribute('id')
-        var idCustomer = getCookie('user_token')
-        Product.parentElement.remove()
-        $('.header-cart-total').remove()
-        $.ajax({
-            url: `/cart`,
-            type: 'DELETE',
-            data: {
-                idProduct: id,
-                idCustomer: idCustomer,
-            }
-        })
+    // // delete product in cart 
+    // function deleteProductCart(Product){
+    //     var id = Product.getAttribute('id')
+    //     var idCustomer = getCookie('user_token')
+    //     Product.parentElement.remove()
+    //     $('.header-cart-total').remove()
+    //     $.ajax({
+    //         url: `/cart`,
+    //         type: 'DELETE',
+    //         data: {
+    //             idProduct: id,
+    //             idUser: idCustomer,
+    //         }
+    //     })
         
-    }
+    // }
 
     // get cart header
     function getCart(){
@@ -68,6 +68,7 @@
         var id = Product.getAttribute('id')
         var idUser = getCookie('user_token')
         Product.parentElement.remove()
+        $('.header-cart-total').remove()
         $.ajax({
             url: `/cart`,
             type: 'DELETE',

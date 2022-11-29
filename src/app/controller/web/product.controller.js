@@ -47,7 +47,7 @@ class productController {
             })
     }
     
-    // get all product (first load/ get 8 product)
+    // get 8 product (first load/ get 8 product)
     getAllProduct(req, res) {
             const q = `SELECT * FROM product limit 8`
             conn.query(q, (err, results)=>{
@@ -58,6 +58,18 @@ class productController {
                 }
             })
         }
+
+    // get all product 
+    getAllProducts(req, res){
+        const q = `SELECT * FROM product`
+            conn.query(q, (err, results)=>{
+                if(results){
+                    res.json({"products": results})
+                }else{
+                    res.json({"Error": new Error("Can't get all product !")})
+                }
+            })
+    }
 
     // get product for home page (first load home/ get 4 products)
     getProductHome() {
@@ -155,6 +167,60 @@ class productController {
             res.json({"Error": new Error("Can't get some product !")})
         }  
     }
+
+    // check product 
+    checkProduct(req, res, next){
+        var idProduct = req.params.idProduct
+        var idProduct = Number(idProduct)
+        const q = `select * FROM product where idProduct = ${idProduct}`
+            conn.query(q, (err, results)=>{
+                if(results.length > 0){
+                    next()
+                }else{
+                    res.json({"Error": "Product not exist !"})
+                }
+            })
+    }
+
+    // update product 
+    updateProduct(req, res){
+        var idProduct = req.body.idProduct
+        var productName = req.body.productName
+        var productImage = req.body.productImage
+        var productCount = req.body.productCount
+        var productPrice = req.body.productPrice
+        var productInfo = req.body.productInfo
+
+        const q = `update product 
+                    set idProduct = ${idProduct}, 
+                    productName = "${productName}", 
+                    productPrice = "${productPrice}",
+                    productCount = "${productCount}",
+                    productImage = "${productImage}",
+                    where idProduct = ${idProduct}`
+            conn.query(q, (err, results)=>{
+                if(!err){
+                    res.json({"message": "Updated product !"})
+                }else{
+                    res.json({"Error": "Cant update product !"})
+                }
+            })
+    }
+
+    // delete product
+    deleteProduct(req, res){
+        var idProduct = req.params.idProduct
+        var idProduct = Number(idProduct)
+        const q = `delete FROM product where idProduct = ${idProduct}`
+            conn.query(q, (err, results)=>{
+                if(results){
+                    res.json({"product": results})
+                }else{
+                    res.json({"Error": new Error("Can't get product !")})
+                }
+            })
+    }
+
     
 }
 
