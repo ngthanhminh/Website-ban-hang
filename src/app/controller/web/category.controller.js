@@ -74,7 +74,7 @@ class categoryController {
                 if(!err){
                     res.json({"message" : "Added category !"})
                 }else{
-                    res.json({"Error" :new Error('cant delete catgory')})
+                    res.json({"Error" :new Error('Cant delete catgory')})
                 }
             })
     }
@@ -88,11 +88,11 @@ class categoryController {
                 if(results){
                     next()
                 }else{
-                    res.json({"Error" :new Error('Not exist category !')})
+                    res.json({"Error" :new Error('Category is not exist !')})
                 }
             })
         }else{
-            res.json({"Error" :new Error('Not exist category !')})
+            res.json({"Error" :new Error('Category is not exist !')})
         }
         
     }
@@ -113,7 +113,7 @@ class categoryController {
                 }
             )
         }else{
-            res.json({"Error" :new Error('Not exist category !')})
+            res.json({"Error" :new Error('Category is not exist !')})
         }
     }
 
@@ -125,7 +125,7 @@ class categoryController {
                 const q1 = `delete FROM product where idCategory = ${idCategory}`
                 conn.query(q1, (err, results)=>{
                     if(!err){
-                        resolve({'message': 'Deleted all product in category !'})
+                        resolve({'message': 'All products in the cart have been removed !'})
                     }else{
                         reject({"message": "Can't delete all product in category !"})
                     }
@@ -137,7 +137,7 @@ class categoryController {
                     if(!err){
                         res.json({"message" : "Deleted category !"})
                     }else{
-                        res.json({"Error" :new Error('cant delete catgory')})
+                        res.json({"Error" :new Error('Cant delete catgory')})
                     }
                 })
             })
@@ -145,7 +145,7 @@ class categoryController {
                 res.json({"Error": err})
             })
         }else{
-            res.json({"Error" :new Error('Not exist category !')})
+            res.json({"Error" :new Error('Category is not exist !')})
         }
     }
 

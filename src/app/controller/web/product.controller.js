@@ -183,7 +183,7 @@ class productController {
                     if(results.length > 0){
                         next()
                     }else{
-                        res.json({"message": "Product not exist !"})
+                        res.json({"message": "Product is not exist !"})
                     }
                 }
             )
@@ -211,7 +211,7 @@ class productController {
                 }
             )
         }else{
-            res.json({"message": "Product not exist !"})
+            res.json({"message": "Product is not exist !"})
         }
     }
 
@@ -270,7 +270,7 @@ class productController {
                 if(!err){
                     res.send(`
                             <div style="margin: 40px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-                                <h3>Updated product !</h3>
+                                <h3>Product has been updated !</h3>
                                 <button style="padding: 4px 14px"><a href='/admin' style="text-decoration:none;">Home</a></button>
                             </div>`)
                 }else{
@@ -288,8 +288,8 @@ class productController {
                     if(!err){
                         res.send(`
                             <div style="margin: 40px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-                                <h3>Updated product !</h3>
-                                <button style="padding: 4px 14px"><a href='/admin' style="text-decoration:none;">Home</a></button>
+                                <h3>Product has been updated !</h3>
+                                <button style="padding: 8px 40px"><a href='/admin' style="text-decoration:none;">Home</a></button>
                             </div>
                         `)
                     }else{
