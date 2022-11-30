@@ -3,7 +3,7 @@ const conn = require('../../config/connect')
 
 class adminController {
     index(req, res) {
-        res.render('layouts/admin', {})
+        res.render('layouts/admin', {"message": "Welcome to admin page !"})
     }
 
 }

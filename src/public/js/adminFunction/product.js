@@ -8,7 +8,7 @@
 					<input type="text" placeholder="Search..." name="search" class="form-control search-input" id="productSearch" onclick="getProductSearch()">
 		        </div>
             </div><br>
-            <table id="categories">
+            <table id="products">
                 <th>Id Product</th>
                 <th>Name</th>
                 <th>Image</th>
@@ -25,7 +25,7 @@
         .then(data=>{
             if(data){
                 data.products.forEach(val=>{
-                    let category = 
+                    let product = 
                         `<tr>
                             <td>${val.idProduct}</td>
                             <td>${val.productName}</td>
@@ -37,10 +37,10 @@
                                 <input type="button" value="Delete" onclick="deleteProduct(${val.idProduct},this)" />
                             </td>
                         </tr>`
-                    $('#categories').append(category)
+                    $('#products').append(product)
                 })
             }else{
-                $('#categories').append(`<p>No category ...</p>`)
+                $('#products').append(`<p>No category ...</p>`)
             }
         })
         .catch(err=>{
@@ -60,13 +60,16 @@
             if(data){
                 var detail = 
                     `<h2>Details Product</h2><hr><br>
-                    <form class="detailCategory">
+                    <form id="formProduct" action="/admin/product/${data.product[0].idProduct}" method="post" class="detailCategory" enctype="multipart/form-data">
                         <div class="form-content">
                             <div class="formElement">
-                                <label>Id</label><input type="text" value="${data.product[0].idProduct}" name="idProduct" id="idProduct" disabled/>
+                                <label>Id Product</label><input required type="text" value="${data.product[0].idProduct}" name="idProduct" id="idProduct" disabled/>
                             </div>
                             <div class="formElement">
-                                <label>Name</label><input type="text" value="${data.product[0].productName}" name="productName" id="productName" />
+                                <label>Id Category</label><input required type="text" value="${data.product[0].idCategory}" name="idCategory" id="idCategory" />
+                            </div>
+                            <div class="formElement">
+                                <label>Name</label><input required type="text" value="${data.product[0].productName}" name="productName" id="productName" />
                             </div>
                             <div class="formElement ">
                                 <label>Image</label>
@@ -76,17 +79,17 @@
                                 </div>
                             </div>
                             <div class="formElement">
-                                <label>Number</label><input type="text" value="${data.product[0].productCount}" name="productCount" id="productCount" />
+                                <label>Number</label><input required type="text" value="${data.product[0].productCount}" name="productCount" id="productCount" />
                             </div>
                             <div class="formElement">
-                                <label>Price</label><input type="text" value="${data.product[0].productPrice}" name="productPrice" id="productPrice" />
+                                <label>Price</label><input required type="text" value="${data.product[0].productPrice}" name="productPrice" id="productPrice" />
                             </div>
                             <div class="formElement">
                                 <label>Decription</label><textarea name="productInfo" id="productInfo">${data.product[0].productInfo}</textarea>
                             </div>
                             <div class="formElement">
-                                <label></label><input type="button" name="" id="update_Category" value="Update" onclick="updateProduct(${data.product[0].idProduct})" />
-                                <input type="button" name="" id="" value="Back" onclick="getAllProducts()"/>
+                                <label></label><input required type="submit" name="" id="update_Category" value="Update" />
+                                <input required type="button" name="" id="" value="Back" onclick="getAllProducts()"/>
                             </div><br>
                             <div class="formElement">
                                 <label></label><span class="message"></span>
@@ -96,40 +99,43 @@
                     $('#content').children().remove()
                     $('#content').append(detail)
             }else{
-                console.log('Cant get detail category ...')
+                console.log('Cant get detail product ...')
             }
         })
     }
 
-    // load form add category
+    // load form add product
     function loadFormAddProduct(){
         var formAdd = 
                 `<h2>Add Product</h2><hr><br>
-                    <form class="detailCategory">
+                    <form class="detailCategory" method="POST" action="/admin/product" enctype="multipart/form-data">
                         <div class="form-content">
                             <div class="formElement">
-                                <label>Id</label><input type="text" value="" name="idCategory" id="idCategory" />
+                                <label>Id product</label><input required type="text" value="" name="idProduct" id="idProduct" />
                             </div>
                             <div class="formElement">
-                                <label>Name</label><input type="text" value="" name="productName" id="productName" />
+                                <label>Id category</label><input required type="text" value="" name="idCategory" id="idCategory" />
+                            </div>
+                            <div class="formElement">
+                                <label>Name</label><input required type="text" value="" name="productName" id="productName" />
                             </div>
                             <div class="formElement ">
                                 <label>Image</label>
                                 <div class="productImage">
-                                    <input type="file" id="productImage" name="productImage"/>
+                                    <input required type="file" id="productImage" name="productImage"/>
                                 </div>
                             </div>
                             <div class="formElement">
-                                <label>Number</label><input type="text" value="" name="productCount" id="productCount" />
+                                <label>Number</label><input required type="number" value="" name="productCount" id="productCount" />
                             </div>
                             <div class="formElement">
-                                <label>Price</label><input type="text" value="" name="productPrice" id="productPrice" />
+                                <label>Price</label><input required type="number" value="" name="productPrice" id="productPrice" />
                             </div>
                             <div class="formElement">
                                 <label>Decription</label><textarea name="productInfo" id="productInfo"></textarea>
                             </div>
                             <div class="formElement">
-                                <label></label><input type="button" name="" id="update_Category" value="Update" onclick="addProduct()" />
+                                <label></label><input type="submit" name="" id="addProduct" value="Add" />
                                 <input type="button" name="" id="" value="Back" onclick="getAllProducts()"/>
                             </div><br>
                             <div class="formElement">
@@ -141,30 +147,7 @@
         $('#content').append(formAdd)
     }
 
-    // add category
-    function addProduct(){
-        $.ajax({
-            url: `/admin/product`,
-            type: 'POST',
-            data: {
-                idCategory: $('#idCategory').val(),
-                categoryName: $('#categoryName').val(),
-                forGender: $('select#gender').val(),
-            }
-        })
-        .then(data=>{
-            if(data){
-                $('.message').text(data.message)
-            }else{
-                console.log('Add category finished...')
-            }
-        })
-        .catch(err=>{
-                console.log('Error: ', err)
-        })
-    }
-
-    // update category
+    // update 
     function updateProduct(id){
         $.ajax({
             url: `/admin/product/${id}`,
@@ -179,10 +162,11 @@
             }
         })
         .then(data=>{
+            console.log(data)
             if(data){
                 $('.message').text(data.message)
             }else{
-                console.log('Cant update category ...')
+                console.log('Cant update  ...')
             }
         })
         .catch(err=>{
@@ -190,7 +174,7 @@
         })
     }
 
-    // delete category
+    // delete 
     function deleteProduct(id,product){
         var del = confirm("Delete product ?")
         if(del == true){
@@ -208,6 +192,39 @@
         }
     }
 
+    // search product 
     function getProductSearch(){
-        
+        $('#productSearch').keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                var keysearch = $('#productSearch').val()
+                $.ajax({
+                    url: `/admin/product/search/${keysearch}`,
+                    type: 'GET',
+                })
+                .then(data=>{
+                    if(data){
+                        $('#products').children().remove()
+                        data.products.forEach(val=>{
+                            let product = 
+                                `<tr>
+                                    <td>${val.idProduct}</td>
+                                    <td>${val.productName}</td>
+                                    <td><img src="/image/${val.productImage}" alt="${val.productName}" width="40" height="50"></td>
+                                    <td>${val.productCount}</td>
+                                    <td>${val.productPrice}</td>
+                                    <td>	
+                                        <input type="button" value="Detail" onclick="detailProduct(${val.idProduct},this)" />
+                                        <input type="button" value="Delete" onclick="deleteProduct(${val.idProduct},this)" />
+                                    </td>
+                                </tr>`
+                                $('#products').append(product)
+                        })
+                    }else{
+                        $('#products').append(`<p>No category ...</p>`)
+                    }
+                })
+            }
+
+        })        
     }

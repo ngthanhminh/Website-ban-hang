@@ -60,10 +60,10 @@
                     <form class="detailCategory">
                         <div class="form-content">
                             <div class="formElement">
-                                <label>Id</label><input type="text" value="${data.category[0].idCategory}" name="idCategory" id="idCategory" disabled/>
+                                <label>Id</label><input required type="text" value="${data.category[0].idCategory}" name="idCategory" id="idCategory" disabled/>
                             </div>
                             <div class="formElement">
-                                <label>Name</label><input type="text" value="${data.category[0].categoryName}" name="categoryName" id="categoryName" />
+                                <label>Name</label><input required type="text" value="${data.category[0].categoryName}" name="categoryName" id="categoryName" />
                             </div>
                             <div class="formElement">
                                 <label>Gender</label>
@@ -99,10 +99,10 @@
             <form class="detailCategory">
                 <div class="form-content">
                     <div class="formElement">
-                        <label>Id</label><input type="text" value="" name="idCategory" id="idCategory" />
+                        <label>Id</label><input required type="text" value="" name="idCategory" id="idCategory" />
                     </div>
                     <div class="formElement">
-                        <label>Name</label><input type="text" value="" name="categoryName" id="categoryName" />
+                        <label>Name</label><input required type="text" value="" name="categoryName" id="categoryName" />
                     </div>
                     <div class="formElement">
                         <label>Gender</label>
