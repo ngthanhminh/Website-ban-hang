@@ -225,8 +225,7 @@ class productController {
         const productImage = req.file.filename
         const idCategory = req.body.idCategory
 
-        new Promise((resolve, reject)=>{
-            const q1 = `select * from category where idCategory = ${idCategory}`
+        const q1 = `select * from category where idCategory = ${idCategory}`
             conn.query(q1, (err, results)=>{
                 if(results.length > 0){
                     const q = `insert into product values(${idProduct}, "${productName}", "${productInfo}", "${productImage}", ${productCount}, ${productPrice}, ${idCategory} )`
@@ -245,9 +244,8 @@ class productController {
                 }else{
                     res.json({"message": "Id category not exist !"})
                 }
-            })
-        })
-        
+            }
+        ) 
     }
 
     // update product 
@@ -307,7 +305,7 @@ class productController {
         var idProduct = Number(idProduct)
         const q = `delete FROM product where idProduct = ${idProduct}`
             conn.query(q, (err, results)=>{
-                if(results){
+                if(!err){
                     res.json({"product": results})
                 }else{
                     res.json({"Error": new Error("Can't get product !")})

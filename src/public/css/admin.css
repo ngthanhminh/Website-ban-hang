@@ -75,7 +75,8 @@
     vertical-align: top;
  }
 
- .formElement input[type="text"]{
+ .formElement input[type="text"], 
+ .formElement input[type="date"]{
     display: inline-block;
     width: 500px;
     padding: 2px 10px;
@@ -83,12 +84,14 @@
  }
 
  .formElement input[type="button"]{
+    display: inline-block;
     margin-top: 20px;
     margin-right: 20px;
     padding: 0 14px;
  }
 
  .formElement input[type="submit"]{
+    display: inline-block;
     margin-top: 20px;
     margin-right: 20px;
     padding: 0 14px;
@@ -99,6 +102,13 @@
     width: 500px;
     padding: 2px 10px;
     font-size: 14px;
+}
+
+.formElement input[type="email"]{
+  display: inline-block;
+  width: 500px;
+  padding: 2px 10px;
+  font-size: 14px;
 }
 
  .form-content h3{
