@@ -42,13 +42,19 @@
 <body class="animsition">
 
     <!-- Header -->
-    <%- include('../partials/header.ejs') -%>
+	<div class=".container-fluid">
+		<%- include('../partials/header.ejs') -%>
+	</div>
 
         <!-- Body -->
-    <%- include(`../pages/${page}.ejs`) -%>
+	<div class=".container-fluid " id="main">
+		<%- include(`../pages/${page}.ejs`) -%>
+	</div>
 
             <!-- Footer -->
-    <%- include('../partials/footer.ejs') -%>
+	<div class=".container-fluid">
+		<%- include('../partials/footer.ejs') -%>
+	</div>
 
 <!--===============================================================================================-->	
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

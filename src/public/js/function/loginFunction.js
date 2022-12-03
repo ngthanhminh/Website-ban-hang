@@ -35,14 +35,25 @@
         })
         .then(data => {
             if(data){
-            if(data.tokenUser){
-                setCookie('user_token', data.tokenUser, 1)
-                document.location.href = 'http://localhost:3000/home'
-            }
-            else{
-                document.getElementById('error').innerHTML = data.message
-                document.getElementById('error').style.color = "red"
-            }
+                // user
+                if(data.tokenUser){
+                    setCookie('user_token', data.tokenUser, 1)
+                    document.location.href = 'http://localhost:3000/home'
+                }
+                else{
+                    document.getElementById('error').innerHTML = data.message
+                    document.getElementById('error').style.color = "red"
+                }
+
+                // admin
+                if(data.tokenAdmin){
+                    setCookie('admin_token', data.tokenAdmin, 1)
+                    document.location.href = 'http://localhost:3000/admin'
+                }
+                else{
+                    document.getElementById('error').innerHTML = data.message
+                    document.getElementById('error').style.color = "red"
+                }
             
             }else{
             console.log('Khong co data !')

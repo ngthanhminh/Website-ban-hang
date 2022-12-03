@@ -54,8 +54,8 @@ class login {
                     res.json({"tokenUser": token})
                 }
                 if(results[0].role == 'admin'){
-                    const token = jwt.sign(results[0].idUser, process.env.KEY_TOKEN)
-                    next()
+                    const token = jwt.sign(results[0].idUser, process.env.KEY_ADMIN)
+                    res.json({"tokenAdmin": token})
                 }
              }
              else{

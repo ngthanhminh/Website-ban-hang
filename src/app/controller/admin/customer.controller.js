@@ -27,7 +27,7 @@ class customerController {
                     if(results.length > 0){
                         res.json({"customer": results})
                     }else{
-                        res.json({"Error": new Error('No data with table catgory')})
+                        res.json({"Error": new Error('Customer is not exist !')})
                     }
                 }
             )
@@ -149,7 +149,7 @@ class customerController {
                 if(!err){
                     res.json({"message": "Deleted customer !"})
                 }else{
-                    console.log(err)
+                    // console.log(err)
                     res.json({"Error": new Error("Can't delete customer !")})
                 }
             })

@@ -5,43 +5,47 @@ var numberLoad = 0;
         type: 'GET',
        })
        .then(data=>{
-            data.products.forEach(val=>{
-                var product = $(`
-                        <div class="block2" id="${val.idProduct}" onclick="getProductDetail(this)">
-                            <div class="block2-pic hov-img0">
-                                <img src="image/${val.productImage}" alt="IMG-PRODUCT">
-        
-                                <a href="#Product Overview"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-        
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        ${val.productName}
-                                    </a>
-        
-                                    <span class="stext-105 cl3">
-                                        ${val.productPrice}
-                                    </span>
-                                </div>
-        
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="image/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="image/icons/icon-heart-02.png"
-                                            alt="ICON">
+            if(data.products.length > 0){
+                $('#products').append(`<div class="row ">`)
+                data.products.forEach(val=>{
+                    var product = $(`
+                            <div class="block2 col-lg-3 col-md-6 col-12 p-b-30" id="${val.idProduct}" onclick="getProductDetail(this)">
+                                <div class="block2-pic hov-img0">
+                                    <img src="image/${val.productImage}" alt="IMG-PRODUCT">
+            
+                                    <a href="#Product Overview"
+                                        class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                        Quick View
                                     </a>
                                 </div>
+            
+                                <div class="block2-txt flex-w flex-t p-t-14">
+                                    <div class="block2-txt-child1 flex-col-l ">
+                                        <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                            ${val.productName}
+                                        </a>
+            
+                                        <span class="stext-105 cl3">
+                                            ${val.productPrice}
+                                        </span>
+                                    </div>
+            
+                                    <div class="block2-txt-child2 flex-r p-t-3">
+                                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                            <img class="icon-heart1 dis-block trans-04" src="image/icons/icon-heart-01.png"
+                                                alt="ICON">
+                                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="image/icons/icon-heart-02.png"
+                                                alt="ICON">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                `)
-                $('#products').append(product)
-            })
-            numberLoad++
+                    `)
+                    $('#products .row:last').append(product)
+                })
+                numberLoad++
+            }
+            
        })
        .catch(err=>{
             console.log('error: ', err)
@@ -61,7 +65,7 @@ var numberLoad = 0;
                         <section class="sec-product-detail bg0 p-t-65 p-b-60">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-6 col-lg-7 p-b-30">
+                                <div class="col-md-6 col-lg-7 p-b-30 p-l-0 p-r-30">
                                     <div class="p-l-25 p-r-30 p-lr-0-lg">
                                         <div class="wrap-slick3 flex-sb flex-w">
                                             <div class="wrap-slick3-dots"></div>
@@ -99,7 +103,7 @@ var numberLoad = 0;
                                         <!--  -->
                                         <div class="p-t-33 ">
                                             <div class="flex-w flex-r-m p-b-10">
-                                                <div class="size-204 flex-w flex-m respon6-next">
+                                                <div class="d-flex flex-column .align-items-center size-204 flex-w  respon6-next">
                                                     <div class="wrap-num-product flex-w m-r-20 m-tb-10">
                                                         <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" id="minus-product">
                                                             <i class="fs-16 zmdi zmdi-minus"></i>
@@ -112,7 +116,7 @@ var numberLoad = 0;
                                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                                         </div>
                                                     </div>
-                                                    <div class="p-t-100" id="${val.idProduct}" onclick="add_to_cart(this)">
+                                                    <div class="p-t-30" id="${val.idProduct}" onclick="add_to_cart(this)">
                                                         <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" >
                                                             Add to cart
                                                         </button>
@@ -167,4 +171,72 @@ var numberLoad = 0;
         }else{
             document.location.href = 'http://localhost:3000/login'
         }
+    }
+
+    // search 
+    function search(){
+        $('#header-search').keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which)
+            if (keycode == '13') {
+                var keysearch = $('#header-search').val()
+                $.ajax({
+                    url: `/product/search/${keysearch}`,
+                    type: 'GET',
+                })
+                .then(data=>{
+                    $('#main').children().remove()
+                    $('#main').append(`<div class="container p-t-120 p-b-160" id="products"></div>`)
+                    $('#products').append(`<h3 class="ltext-103 cl5 p-b-50 ">Product: </h3>`)
+                    if(data.products.length > 0){
+                        $('#products').append(`<div class="row ">`)
+                        data.products.forEach(val=>{
+                            var product = $(`
+                                    <div class="block2 col-lg-3 col-md-6 col-12" id="${val.idProduct}" onclick="getProductDetail(this)">
+                                        <div class="block2-pic hov-img0">
+                                            <img src="image/${val.productImage}" alt="IMG-PRODUCT">
+                    
+                                            <a href="#"
+                                                class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                                Quick View
+                                            </a>
+                                        </div>
+                    
+                                        <div class="block2-txt flex-w flex-t p-t-14">
+                                            <div class="block2-txt-child1 flex-col-l ">
+                                                <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                                    ${val.productName}
+                                                </a>
+                    
+                                                <span class="stext-105 cl3">
+                                                    ${val.productPrice}
+                                                </span>
+                                            </div>
+                    
+                                            <div class="block2-txt-child2 flex-r p-t-3">
+                                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                                    <img class="icon-heart1 dis-block trans-04" src="image/icons/icon-heart-01.png"
+                                                        alt="ICON">
+                                                    <img class="icon-heart2 dis-block trans-04 ab-t-l" src="image/icons/icon-heart-02.png"
+                                                        alt="ICON">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                            `)
+                            $('#products .row:last').append(product)
+                        })
+                        $('#close').click() = true
+                    }else{
+                        $('#products').children().remove()
+                        $('#products').append(`<h4>Cannot found !</h4>`)
+                        $('#close').click() = true
+                    }
+                })
+
+                $('#btnLoadMore').hide()
+                $('#btnLoadMoreCP').hide()
+                numberLoad = 0;
+                numberLoadCP = 0;
+                }
+            })
     }

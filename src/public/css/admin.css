@@ -17,7 +17,7 @@
   th, td {
     /* width: 25%; */
     padding: 8px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #DDD;
   }
   
@@ -26,21 +26,6 @@
   }
 
   tr:hover {background-color: #D6EEEE;}
-  
-  button:hover{
-    box-sizing: border-box;
-    outline: 0.1px solid #5d6778;
-  }
- 
-  button{
-    box-sizing: border-box;
-    font-size: 12px;
-    color: #5d6778;
-    border: none;
-    /* border: 0.1px solid #5d6778; */
-    background-color: transparent;
-    padding: 2px 20px;
-  }
 
   .nav-link:hover{
     cursor: pointer;
@@ -119,7 +104,6 @@
  .formElement hr{
     display: block;
     width: 100%;
-
  }
 
  .formElement textarea{
@@ -145,3 +129,50 @@
     align-items: center;
 
  }
+
+ #back{
+    display: inline-block;
+    margin-left: 14px;
+    padding: 1px 10px;
+ }
+
+ .count{
+    display: inline-block;
+    width: 60px;
+    padding: 2px 10px;
+    font-size: 14px;
+ }
+
+ .detailAdmin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .detailAdminHead{
+    text-align: center;
+ }
+
+ .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown-content p:hover{
+  cursor: pointer;
+  color: rgb(18, 18, 18);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

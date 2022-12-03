@@ -8,8 +8,11 @@ const router = express.Router()
     // get information for admin page
 router.get('/', adminController.index)
 
-    
+    // get infomation admin
+    .post('/info', adminController.info)
 
+    // update admin 
+    .put('/:idAdmin', adminController.checkAdmin, adminController.updateAdmin )
 
 
 module.exports = router;

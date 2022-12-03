@@ -718,7 +718,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     display: -ms-flexbox;
     display: flex;
   }
-  .container-menu-desktop {display: none;}
+  .container-menu-desktop {display: block;}
 }
 
 /*==================================================================
@@ -1958,25 +1958,31 @@ input.num-product::-webkit-inner-spin-button {
 /*//////////////////////////////////////////////////////////////////
 [ Block2 ]*/
 
-#products {
+/* #products {
   width: 100%;
   padding: 20px 0 0 0px;
   display: block;
   position: relative;
-}
+} */
 
 footer{
   display: block;
   position: relative;
 }
+/* 
 .block2{
   display: inline-block;
   width: 288px;
   box-sizing: border-box;
   padding: 20px 10px;
 }
+*/
 .block2-pic {
   position: relative;
+}
+
+.block2-pic img{
+  min-height: 365px;
 }
 
 .block2-btn {
@@ -1992,7 +1998,7 @@ footer{
 
 .block2-pic:hover .block2-btn {
   bottom: 20px;
-}
+} 
 
 /*---------------------------------------------*/
 .block2-txt-child1 {

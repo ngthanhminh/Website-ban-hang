@@ -167,6 +167,59 @@
         $('#content').append(formAdd)
     }
 
+    // load customer cart
+    function detailCart(id, customer){
+        var header = 
+            `<h2>Customer Cart</h2><hr>
+			<div>
+                <input type="button" value="Add product" onclick="loadAddProductCart(${id})"/>
+                <input type="button" name="" id="back" value="Back" onclick="getcustomers()"/>
+                <div class="app-search-box col">
+					<input type="text" placeholder="Search..." name="search" class="form-control search-input" id="productSearch" onclick="getProductSearch()">
+		        </div>
+            </div><br>
+            <table id="products">
+                <th>Id Product</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Number</th>
+                <th>Price</th>
+                <th>Nubmer</th>
+                <th>Function</th>
+            </table>`
+        $('#content').children().remove()
+        $('#content').append(header)
+        $.ajax({
+            url: `/admin/product/customer/${id}`,
+            type: 'GET'
+        })
+        .then(data=>{
+            if(data){
+                data.products.forEach(val=>{
+                    let product = 
+                        `<tr>
+                            <td>${val.idProduct}</td>
+                            <td>${val.productName}</td>
+                            <td><img src="/image/${val.productImage}" alt="${val.productName}" width="40" height="50"></td>
+                            <td>${val.productCount}</td>
+                            <td>${val.productPrice}</td>
+                            <td>${val.countBuy}</td>
+                            <td>	
+                                <input type="button" value="Delete" onclick="deleteProductCart(${val.idProduct}, ${id}, this)" />
+                            </td>
+                        </tr>`
+                    $('#products').append(product)
+                })
+            }else{
+                $('#products').append(`<p>No category ...</p>`)
+            }
+        })
+        .catch(err=>{
+            console.log('Error: ', err)
+        })
+    }
+    // $('#product').click(getAllProducts)
+
     // add customer
     function addCustomer(){
         $.ajax({
@@ -196,7 +249,7 @@
         })
     }
 
-    // update category
+    // update customer
     function updateCustomer(id){
         console.log($('#Birthday').val())
         $.ajax({

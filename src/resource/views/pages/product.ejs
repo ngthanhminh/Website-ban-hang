@@ -33,9 +33,10 @@
         </div>
     </div>
     <div class="" id="products">
-        <% products.forEach(val=>{ %>
+        <div class="row">
+            <% products.forEach(val=>{ %>
                 <!-- Block2 -->
-                <div class="block2" id="<%= val.idProduct %>" onclick="getProductDetail(this)">
+                <div class="block2 col-lg-3 col-md-6 col-12 p-b-30" id="<%= val.idProduct %>" onclick="getProductDetail(this)">
                     <div class="block2-pic hov-img0">
                         <img src="image/<%= val.productImage %>" alt="IMG-PRODUCT">
 
@@ -66,7 +67,8 @@
                         </div>
                     </div>
                 </div>
-        <% }) %>
+            <% }) %>
+        </div>
     </div>
 
     <!-- Load more -->
@@ -79,3 +81,4 @@
 </div>
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <script src="/js/function/productFunction.js"></script>
+<script src="/js/function/homeFunction.js"></script>

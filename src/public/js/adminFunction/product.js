@@ -147,6 +147,53 @@
         $('#content').append(formAdd)
     }
 
+    // load form add product
+    function loadAddProductCart(id){
+        var formAdd = 
+                `<h2>Add product to cart</h2><hr><br>
+                    <form class="detailCategory" method="POST" action="/admin/product" enctype="multipart/form-data">
+                        <div class="form-content">
+                            <div class="formElement">
+                                <label>Id product</label><input required type="number" value="" name="idProduct" id="idProduct" />
+                            </div>
+                            <div class="formElement">
+                                <label>Number</label><input required type="number" value="" name="countBuy" id="countBuy" />
+                            </div>
+                            <div class="formElement">
+                                <label></label><input type="button" name="" id="" value="Add" onclick="addProductToCart(${id})" />
+                                <input type="button" name="" id="" value="Back" onclick="detailCart(${id})"/>
+                            </div><br>
+                            <div class="formElement">
+                                <label></label><span class="message"></span>
+                            </div>
+                        </div>
+                    </form>`
+        $('#content').children().remove()
+        $('#content').append(formAdd)
+    }
+
+    // add product to cart 
+    function addProductToCart(id){
+        $.ajax({
+            url: `/admin/product/customer/${id}`,
+            type: 'POST',
+            data: {
+                idProduct: $('#idProduct').val(),
+                countBuy: $('#countBuy').val(),
+            }
+        })
+        .then(data=>{
+            if(data){
+                $('.message').text(data.message)
+            }else{
+                console.log('Add product finished...')
+            }
+        })
+        .catch(err=>{
+                console.log('Error: ', err)
+        })
+    }
+
     // update 
     function updateProduct(id){
         $.ajax({
@@ -174,13 +221,31 @@
         })
     }
 
-    // delete 
+    // delete product
     function deleteProduct(id,product){
         var del = confirm("Delete product ?")
         if(del == true){
             product.parentElement.parentElement.remove()
             $.ajax({
                 url: `/admin/product/${id}`,
+                type: 'DELETE',
+            })
+            .then(data=>{
+                
+            })
+            .catch(err=>{
+                console.log('Error: ', err)
+            })
+        }
+    }
+
+    // delete product in cart
+    function deleteProductCart(idProduct, idCustomer, product){
+        var del = confirm("Delete product from cart?")
+        if(del == true){
+            product.parentElement.parentElement.remove()
+            $.ajax({
+                url: `/admin/product/${idProduct}/customer/${idCustomer}`,
                 type: 'DELETE',
             })
             .then(data=>{
@@ -228,3 +293,5 @@
 
         })        
     }
+
+   

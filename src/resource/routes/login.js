@@ -7,14 +7,6 @@ const loginController = require('../../app/controller/web/login')
 
 const router = express.Router()
 
-function authentiration(req, res, next){
-    if(req.cookies.user_token){
-
-    }else{
-        next()
-    }
-}
-
     // get information for login page
 router.get('/', loginController.index)
 

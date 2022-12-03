@@ -3,10 +3,11 @@ const express = require('express')
 // const siteController = require('../../app/controller/siteController')
 // const sanPhamController = require('../../app/controller/sanPhamController')
 const customerController = require('../../../app/controller/admin/customer.controller')
+const adminController = require('../../../app/controller/admin/admin.controller')
 const router = express.Router()
 
         // get all customer
-router.get('/', customerController.getAllCustomers)
+router.get('/', adminController.auth_account_Admin, customerController.getAllCustomers)
 
     // get a customer 
     .get('/:idCustomer', customerController.getCustomer)
@@ -18,7 +19,7 @@ router.get('/', customerController.getAllCustomers)
     .put('/:idCustomer', customerController.checkCustomer, customerController.updateCustomer)
 
     // delete customer
-    .delete('/:idCustomer', customerController.checkCustomer, customerController.deleteCustomerCart, customerController.deleteCustomer)
+    .delete('/:idCustomer', [customerController.checkCustomer, customerController.deleteCustomerCart], customerController.deleteCustomer)
     
     // search customer
     .get('/search/:customerName', customerController.searchCustomer)

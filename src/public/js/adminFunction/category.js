@@ -18,7 +18,7 @@
         $('#content').children().remove()
         $('#content').append(header)
         $.ajax({
-            url: `/category`,
+            url: `/admin/category`,
             type: 'GET'
         })
         .then(data=>{

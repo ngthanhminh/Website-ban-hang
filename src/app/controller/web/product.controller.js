@@ -12,10 +12,10 @@ const { resolve } = require('path')
 
 class productController {
 
-    // render home page
+    // render shop page
     async index(req, res) {
         // get product for product page:
-        var products = await new Promise((resolve, reject)=>{
+        const products = await new Promise((resolve, reject)=>{
             const q = `SELECT * FROM product limit 8`
             conn.query(q, (err, results)=>{
                 if(results){
@@ -25,9 +25,7 @@ class productController {
                 }
             })
         })
-
-        var categories = await categoryController.getAllCategory()
-        
+        const categories = await categoryController.getAllCategory()        
         res.render('layouts/main', { 
             "page": "product", 
             "title": "product",
@@ -153,6 +151,26 @@ class productController {
         }  
     }
 
+    // get product in customer'cart
+    getProductsCart(req, res){
+        var id = req.params.idCustomer
+        // console.log(id)
+        if(id){
+            const q = `SELECT * FROM product join cart
+                        on product.idProduct = cart.idProduct
+                        where idUser = ${id}`
+            conn.query(q, (err, results)=>{
+                if(results){
+                    res.json({"products": results})
+                }else{
+                    res.json({"message": new Error("Can't get some product !")})
+                }
+            })
+        }else{
+            res.json({"message": new Error("Can't get some product !")})
+        }  
+    }
+
     // search product:
     getProductSearch(req, res){
         var productName = req.params.productName
@@ -225,27 +243,28 @@ class productController {
         const productImage = req.file.filename
         const idCategory = req.body.idCategory
 
-        const q1 = `select * from category where idCategory = ${idCategory}`
-            conn.query(q1, (err, results)=>{
-                if(results.length > 0){
-                    const q = `insert into product values(${idProduct}, "${productName}", "${productInfo}", "${productImage}", ${productCount}, ${productPrice}, ${idCategory} )`
-                    conn.query(q, (err, results)=>{
-                        if(!err){
-                            res.send(`
-                                    <div style="margin: 40px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-                                        <h3>Added product !</h3>
-                                        <button style="padding: 4px 14px"><a href='/admin' style="text-decoration:none;">Home</a></button>
-                                    </div>`)
-                        }else{
-                            console.log(err)
-                            res.json({"message": "Cant update product !"})
-                        }}
-                    )
-                }else{
-                    res.json({"message": "Id category not exist !"})
-                }
-            }
-        ) 
+        if(req.file.filename){
+            const q1 = `select * from category where idCategory = ${idCategory}`
+                conn.query(q1, (err, results)=>{
+                    if(results.length > 0){
+                        const q = `insert into product values(${idProduct}, "${productName}", "${productInfo}", "${productImage}", ${productCount}, ${productPrice}, ${idCategory} )`
+                        conn.query(q, (err, results)=>{
+                            if(!err){
+                                res.send(`
+                                        <div style="margin: 40px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+                                            <h3>Added product !</h3>
+                                            <button style="padding: 4px 14px"><a href='/admin' style="text-decoration:none;">Home</a></button>
+                                        </div>`)
+                            }else{
+                                console.log(err)
+                                res.json({"message": "Cant update product !"})
+                            }}
+                        )
+                    }else{
+                        res.json({"message": "Id category not exist !"})
+                    }
+                })
+        }
     }
 
     // update product 
@@ -313,6 +332,20 @@ class productController {
             })
     }
 
+    // delete product cart
+    deleteProductCart(req, res){
+        var idProduct = req.params.idProduct
+        var idUser = req.params.idCustomer
+        const q = `delete FROM cart where idProduct = ${idProduct} and idUser = ${idUser}`
+            conn.query(q, (err, results)=>{
+                if(!err){
+                    res.json({"message": "Deleted product in cart !"})
+                }else{
+                    res.json({"Error": new Error("Can't get product !")})
+                }
+            })
+    }
+
     // get product search 
     search(req, res){
         var productName = req.params.productName
@@ -326,7 +359,71 @@ class productController {
         })
     }
 
+    // check add product to cart
+    checkAddProductCart(req, res, next){
+        var idUser = req.params.idCustomer
+        var idProduct = req.body.idProduct
+        var countBuy = req.body.countBuy
+        const q = `select * from cart where idUser = ${idUser} and idProduct = ${idProduct}`
+        conn.query(q, (err, results)=>{
+            if(results.length > 0){
+                res.json({"message": "Product already in the cart !"})
+            }else{
+                next()
+            }
+        })
+    }
+
+    // check add product to cart
+    checkProductExist(req, res, next){
+        var idUser = req.params.idCustomer
+        var idProduct = req.body.idProduct
+        var countBuy = req.body.countBuy
+        const q = `select * from product where idProduct = ${idProduct}`
+        conn.query(q, (err, results)=>{
+            if(results.length > 0){
+                next()
+            }else{
+                res.json({"message": "Product is not exist !"})
+            }
+        })
+    }
+
+    // add Product to Cart
+    addProductCart(req, res){
+        var idUser = req.params.idCustomer
+        var idProduct = req.body.idProduct
+        var countBuy = req.body.countBuy
+        const q = `insert into cart values(${idProduct}, ${idUser}, ${countBuy})`
+        conn.query(q, (err, results)=>{
+            if(!err){
+                res.json({"message": "Added product to cart !"})
+            }else{
+                console.log(err)
+                res.json({"message" : 'Cannot add product to cart... !'})
+            }
+        })
+    }
     
+    // update product in cart
+    updateProductCart(req, res){
+        var idUser = req.params.idCustomer
+        var idProduct = req.params.idProduct
+        var countBuy = req.body.countBuy
+        console.log(countBuy)
+        const q = `update cart set countBuy = ${countBuy} where idUser = ${idUser} and idProduct = ${idProduct}`
+        conn.query(q, (err, results)=>{
+            if(!err){
+                res.json({"message": "Updated product in cart !"})
+            }else{
+                console.log(err)
+                res.json({"message" : 'Cannot update product in cart... !'})
+            }
+        })
+    }
+
+    //
+
 }
 
 module.exports = new productController()

@@ -8,13 +8,15 @@ var numberLoadCP = 0;
         type: 'GET',
     })
     .then(data=>{
+        if(data.products.length > 0){
+            $('#products').append(`<div class="row p-b-30">`)
             data.products.forEach(val=>{
                 var product = $(`
-                        <div class="block2" id="${val.idProduct}" onclick="getProductDetail(this)">
+                        <div class="block2 col-lg-3 col-md-6 col-12" id="${val.idProduct}" onclick="getProductDetail(this)">
                             <div class="block2-pic hov-img0">
                                 <img src="image/${val.productImage}" alt="IMG-PRODUCT">
         
-                                <a href="#"
+                                <a href="#Product Overview"
                                     class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                                     Quick View
                                 </a>
@@ -42,9 +44,10 @@ var numberLoadCP = 0;
                             </div>
                         </div>
                 `)
-                $('#products').append(product)
+                $('#products .row:last').append(product)
             })
             numberLoad++
+        }
             // console.log(numberLoad)
     })
     .catch(err=>{
@@ -60,13 +63,15 @@ var numberLoadCP = 0;
         type: 'GET',
        })
        .then(data=>{
+        if(data.products.length > 0){
+            $('#products').append(`<div class="row ">`)
             data.products.forEach(val=>{
                 var product = $(`
-                        <div class="block2" id="${val.idProduct}" onclick="getProductDetail(this)">
+                        <div class="block2 col-lg-3 col-md-6 col-12 p-b-30" id="${val.idProduct}" onclick="getProductDetail(this)">
                             <div class="block2-pic hov-img0">
                                 <img src="image/${val.productImage}" alt="IMG-PRODUCT">
         
-                                <a href="#"
+                                <a href="#Product Overview"
                                     class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                                     Quick View
                                 </a>
@@ -94,8 +99,9 @@ var numberLoadCP = 0;
                             </div>
                         </div>
                 `)
-                $('#products').append(product)
+                $('#products .row:last').append(product)
             })
+        }
             numberLoadCP++
             // console.log(numberLoad)
        })
@@ -112,9 +118,10 @@ var numberLoadCP = 0;
         })
         .then(data=>{
                 $('#products').children().remove()
+                $('#products').append(`<div class="row ">`)
                 data.products.forEach(val=>{
                     var product = $(`
-                            <div class="block2" id="${val.idProduct}" onclick="getProductDetail(this)">
+                            <div class="block2 col-lg-3 col-md-6 col-12 p-b-30" id="${val.idProduct}" onclick="getProductDetail(this)">
                                 <div class="block2-pic hov-img0">
                                     <img src="image/${val.productImage}" alt="IMG-PRODUCT">
             
@@ -146,7 +153,7 @@ var numberLoadCP = 0;
                                 </div>
                             </div>
                     `)
-                    $('#products').append(product)
+                    $('#products .row:last').append(product)
                 })
                 $('#btnLoadMore').hide()
                 $('#btnLoadMoreCP').remove()
@@ -171,9 +178,10 @@ var numberLoadCP = 0;
         })
         .then(data=>{
                 $('#products').children().remove()
+                $('#products').append(`<div class="row ">`)
                 data.products.forEach(val=>{
                     var product = $(`
-                            <div class="block2" id="${val.idProduct}" onclick="getProductDetail(this)">
+                            <div class="block2 col-lg-3 col-md-6 col-12" id="${val.idProduct}" onclick="getProductDetail(this)">
                                 <div class="block2-pic hov-img0">
                                     <img src="image/${val.productImage}" alt="IMG-PRODUCT">
             
@@ -205,7 +213,7 @@ var numberLoadCP = 0;
                                 </div>
                             </div>
                     `)
-                    $('#products').append(product)
+                    $('#products .row:last').append(product)
                 })
 
                 if(data.products.length >= 8){
@@ -269,7 +277,7 @@ var numberLoadCP = 0;
                                             <!--  -->
                                             <div class="p-t-33 ">
                                                 <div class="flex-w flex-r-m p-b-10">
-                                                    <div class="size-204 flex-w flex-m respon6-next">
+                                                    <div class="d-flex flex-column .align-items-center size-204 flex-w flex-m respon6-next">
                                                         <div class="wrap-num-product flex-w m-r-20 m-tb-10">
                                                             <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" id="minus-product">
                                                                 <i class="fs-16 zmdi zmdi-minus"></i>
@@ -282,7 +290,7 @@ var numberLoadCP = 0;
                                                                 <i class="fs-16 zmdi zmdi-plus"></i>
                                                             </div>
                                                         </div>
-                                                        <div class="p-t-100" id="${val.idProduct}" onclick="add_to_cart(this)">
+                                                        <div class="p-t-30" id="${val.idProduct}" onclick="add_to_cart(this)">
                                                             <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" >
                                                                 Add to cart
                                                             </button>
@@ -338,9 +346,10 @@ var numberLoadCP = 0;
                 .then(data=>{
                         if(data.products.length != 0){
                             $('#products').children().remove()
+                            $('#products').append(`<div class="row ">`)
                             data.products.forEach(val=>{
                                 var product = $(`
-                                        <div class="block2" id="${val.idProduct}" onclick="getProductDetail(this)">
+                                        <div class="block2 col-lg-3 col-md-6 col-12" id="${val.idProduct}" onclick="getProductDetail(this)">
                                             <div class="block2-pic hov-img0">
                                                 <img src="image/${val.productImage}" alt="IMG-PRODUCT">
                         
@@ -372,7 +381,7 @@ var numberLoadCP = 0;
                                             </div>
                                         </div>
                                 `)
-                                $('#products').append(product)
+                                $('#products .row:last').append(product)
                             })
                         }else{
                             $('#products').children().remove()

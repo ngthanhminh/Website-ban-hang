@@ -67,7 +67,7 @@ class cartController {
         })
     }
 
-    // add product on cart
+    // add product to cart
     addProduct(req, res){
         var id = req.body.idUser
         var idProduct = Number(req.body.idProduct)
