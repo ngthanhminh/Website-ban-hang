@@ -185,8 +185,8 @@ var numberLoad = 0;
                 })
                 .then(data=>{
                     $('#main').children().remove()
-                    $('#main').append(`<div class="container p-t-120 p-b-160" id="products"></div>`)
-                    $('#products').append(`<h3 class="ltext-103 cl5 p-b-50 ">Product: </h3>`)
+                    $('#main').append(`<div class="container" id="products" style="padding-top: 120px; padding-bottom: 160px;"></div>`)
+                    $('#products').append(`<h3 class="ltext-103 cl5 p-b-50 ">Your search results </h3>`)
                     if(data.products.length > 0){
                         $('#products').append(`<div class="row ">`)
                         data.products.forEach(val=>{

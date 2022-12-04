@@ -8,7 +8,7 @@ const category = require('../../../app/controller/web/category.controller')
 const router = express.Router()
 
     // get all category 
-    router.get('/', adminController.auth_account_Admin, category.getCategories)
+    router.get('/', category.getCategories)
 
     // get a category
     router.get('/:idCategory', categoryController.getCategory)

@@ -25,7 +25,7 @@ class login {
             try{
                 const idUser = jwt.verify(user_token, process.env.KEY_TOKEN)
                 if(idUser){
-                    const q = `SELECT * FROM user WHERE idUser = "${idUser}"`
+                    const q = `SELECT * FROM user WHERE idUser = "${idUser}" and role = "customer"`
                     conn.query(q, (err, results)=>{
                         if(results.length > 0){
                             next()
@@ -51,11 +51,11 @@ class login {
              if(results.length > 0){
                 if(results[0].role == 'customer'){
                     const token = jwt.sign(results[0].idUser, process.env.KEY_TOKEN)
-                    res.json({"tokenUser": token})
+                    res.json({"tokenUser": token, "message": "Dang nhap thanh cong !"})
                 }
                 if(results[0].role == 'admin'){
                     const token = jwt.sign(results[0].idUser, process.env.KEY_ADMIN)
-                    res.json({"tokenAdmin": token})
+                    res.json({"tokenAdmin": token, "message": "Dang nhap thanh cong !"})
                 }
              }
              else{

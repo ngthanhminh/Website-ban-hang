@@ -7,7 +7,7 @@ const adminController = require('../../../app/controller/admin/admin.controller'
 const router = express.Router()
 
         // get all customer
-router.get('/', adminController.auth_account_Admin, customerController.getAllCustomers)
+router.get('/', customerController.getAllCustomers)
 
     // get a customer 
     .get('/:idCustomer', customerController.getCustomer)

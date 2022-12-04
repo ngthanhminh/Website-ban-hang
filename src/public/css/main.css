@@ -3273,3 +3273,16 @@ footer{
 }
   /*---------------------------------------------*/
   /*FOOTER-----------------------------------*/
+
+  #account{
+    color: #b2b2b2;
+  }
+
+  #account:hover{
+    color: #007bff;
+    cursor: pointer;
+  }
+
+  #product-page{
+    padding-top: 120px;
+  }

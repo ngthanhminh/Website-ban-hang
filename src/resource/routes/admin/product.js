@@ -10,7 +10,7 @@ const adminController = require('../../../app/controller/admin/admin.controller'
 const router = express.Router()
 
  
-router.get('/', adminController.auth_account_Admin, productController.getAllProducts)
+router.get('/', productController.getAllProducts)
 
     // get a product 
     .get('/:idProduct', productController.getProduct)

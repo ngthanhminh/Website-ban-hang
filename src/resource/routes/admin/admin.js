@@ -6,7 +6,7 @@ const categoryController = require('../../../app/controller/web/category.control
 const router = express.Router()
 
     // get information for admin page
-router.get('/', adminController.index)
+router.get('/', adminController.auth_account_Admin, adminController.index)
 
     // get infomation admin
     .post('/info', adminController.info)
