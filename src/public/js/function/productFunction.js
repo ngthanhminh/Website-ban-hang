@@ -1,5 +1,5 @@
-var numberLoad = 0;
-var numberLoadCP = 0;
+    var numberLoad = 0;
+    var numberLoadCP = 0;
 
     // load product for all product 
     function loadMore(page){
@@ -228,6 +228,7 @@ var numberLoadCP = 0;
 
     // get product detail
     function getProductDetail(idProduct){
+        console.log('a')
         $.ajax({
             url: `/product/${idProduct.getAttribute('id')}`,
             type: 'GET',
@@ -323,9 +324,8 @@ var numberLoadCP = 0;
                         }
                     }
                 })
-                
-                
             })
+
             // show button loadmore
             $('#btnLoadMore').show()
             $('#btnLoadMoreCP').remove()
