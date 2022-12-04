@@ -55,8 +55,6 @@ class adminController {
         const Address = req.body.Address
         const Phone = req.body.Phone
         const Email = req.body.Email
-        const username = req.body.username
-        const password = req.body.password
         
         const q = `update user 
             set Name = "${Name}", 
@@ -64,9 +62,8 @@ class adminController {
             Gender = "${Gender}",
             Address = "${Address}",
             Phone = "${Phone}",
-            Email = "${Email}",
-            username = "${username}",
-            password = "${password}"
+            Email = "${Email}"
+            
             where idUser = ${idUser} and role = "admin"`
             conn.query(q, (err, results)=>{
                 if(!err){

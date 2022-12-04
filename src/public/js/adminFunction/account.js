@@ -39,12 +39,6 @@
                         <label>Email</label><input required type="email" value="${data.admin[0].Email}" name="Email" id="Email" />
                     </div>
                     <div class="formElement">
-                        <label>Username</label><input required type="text" value="${data.admin[0].username}" name="username" id="username" />
-                    </div>
-                    <div class="formElement">
-                        <label>Password</label><input required type="text" value="${data.admin[0].password}" name="password" id="password" />
-                    </div>
-                    <div class="formElement">
                         <label></label><input type="button" name="" id="add_Customer" value="Update" onclick="updateAdmin(${data.admin[0].idUser})" />
                         <input type="button" name="" id="" value="Back" onclick="getcustomers()"/>
                         
@@ -72,8 +66,6 @@
                 Address: $('#Address').val(),
                 Phone: $('#Phone').val(),
                 Email: $('#Email').val(),
-                username: $('#username').val(),
-                password: $('#password').val(),
                 Gender: $('select#gender').val(),
             }
         })
